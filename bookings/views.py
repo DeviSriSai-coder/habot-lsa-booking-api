@@ -131,9 +131,9 @@ class PaymentWebhookView(APIView):
         if payment_status == "SUCCESS":
             payment.status = Payment.Status.SUCCESS
             booking.status = BookingRequest.Status.CONFIRMED
-
         elif payment_status == "FAILED":
             payment.status = Payment.Status.FAILED
+            booking.status = BookingRequest.Status.FAILED
 
         else:
             return Response(

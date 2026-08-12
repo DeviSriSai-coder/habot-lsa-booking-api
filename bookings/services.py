@@ -8,8 +8,6 @@ from .models import BookingRequest, LSAProfile, Payment
 
 
 BOOKING_AMOUNT = Decimal("1000.00")
-
-
 @transaction.atomic
 def create_booking(*, parent, lsa, start_time, end_time):
     overlapping_booking = (
@@ -21,10 +19,8 @@ def create_booking(*, parent, lsa, start_time, end_time):
                 BookingRequest.Status.PENDING,
                 BookingRequest.Status.CONFIRMED,
             ],
-        )
-        .filter(
-            Q(start_time__lt=end_time)
-            & Q(end_time__gt=start_time)
+            start_time__lt=end_time,
+            end_time__gt=start_time,
         )
         .first()
     )
@@ -48,8 +44,6 @@ def create_booking(*, parent, lsa, start_time, end_time):
     )
 
     return booking
-
-
 def search_available_lsas(*, skill, start_time=None, end_time=None):
     queryset = (
         LSAProfile.objects
@@ -57,6 +51,7 @@ def search_available_lsas(*, skill, start_time=None, end_time=None):
             is_active=True,
             skills__name__iexact=skill,
         )
+        .prefetch_related("skills")
         .distinct()
     )
 
