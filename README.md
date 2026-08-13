@@ -2,7 +2,7 @@
 
 **Position:** Python Backend Developer  
 **Project:** Habot 1.0 – LSA Service Booking Module  
-**Developer:** Devi Sri Sai
+**Developer:** Banduka Devi Sri Sai
 
 ## 1. Project Overview
 
